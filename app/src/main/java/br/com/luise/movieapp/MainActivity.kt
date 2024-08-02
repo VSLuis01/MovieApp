@@ -2,6 +2,7 @@ package br.com.luise.movieapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -46,6 +47,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.luise.movieapp.navigation.MovieNavigation
 import br.com.luise.movieapp.ui.theme.MovieAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -53,8 +55,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApp { innerPadding ->
-                MainContent(contentPadding = innerPadding)
+            MyApp {
+                MovieNavigation()
             }
         }
     }
@@ -62,46 +64,25 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyApp(content: @Composable (PaddingValues) -> Unit) {
+fun MyApp(content: @Composable () -> Unit) {
     MovieAppTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Simple Scaffold Screen") },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Magenta)
-                )
-            },
-            content = { innerPadding ->
-                content(innerPadding)
-            }
-        )
+        content()
     }
 }
 
-@Composable
-fun MainContent(
-    contentPadding: PaddingValues,
-    movieList: List<String> = listOf("Avatar", "300", "Harry Potter", "LASDAS", "ASDAS", "AAAA", "AAA")
-) {
-    LazyColumn(
-        modifier = Modifier.consumeWindowInsets(contentPadding),
-        contentPadding = contentPadding
-    ) {
-        items(movieList) { movie ->
-            MovieRow(movie = movie)
-        }
-    }
-}
+
 
 @Composable
-fun MovieRow(movie: String) {
+fun MovieRow(movie: String, onItemClick: (String) -> Unit = {}) {
     Card(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()
         .height(130.dp),
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         elevation = CardDefaults.cardElevation(6.dp),
-        onClick = { /*TODO*/ }) {
+        onClick = {
+            onItemClick(movie)
+        }) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
@@ -125,7 +106,7 @@ fun MovieRow(movie: String) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MyApp { innerPadding ->
-        MainContent(contentPadding = innerPadding)
+    MyApp {
+        MovieNavigation()
     }
 }
