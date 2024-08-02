@@ -14,13 +14,13 @@ fun MovieNavigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = MovieScreens.HomeScreen.name) {
-        composable(MovieScreens.HomeScreen.name) {
+        composable(route = MovieScreens.HomeScreen.name) {
             // pass where this should lead us to
             HomeScreen(navController = navController)
         }
 
         composable(
-            MovieScreens.DetailsScreen.name + "/{movie}",
+            route = MovieScreens.DetailsScreen.name + "/{movie}",
             arguments = listOf(navArgument(name = "movie") { type = NavType.StringType })
         ) { backStackEntry ->
 
