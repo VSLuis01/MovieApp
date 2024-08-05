@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import br.com.luise.movieapp.MovieRow
+import br.com.luise.movieapp.model.Movie
+import br.com.luise.movieapp.model.getMovies
 import br.com.luise.movieapp.navigation.MovieScreens
+import br.com.luise.movieapp.widgets.MovieRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,15 +38,7 @@ fun HomeScreen(navController: NavController) {
 fun MainContent(
     navController: NavController,
     contentPadding: PaddingValues,
-    movieList: List<String> = listOf(
-        "Avatar",
-        "300",
-        "Harry Potter",
-        "LASDAS",
-        "ASDAS",
-        "AAAA",
-        "AAA"
-    )
+    movieList: List<Movie> = getMovies()
 ) {
     LazyColumn(
         modifier = Modifier.consumeWindowInsets(contentPadding),

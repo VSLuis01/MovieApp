@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.luise.movieapp.model.Movie
 import br.com.luise.movieapp.navigation.MovieNavigation
 import br.com.luise.movieapp.ui.theme.MovieAppTheme
 
@@ -45,38 +46,6 @@ class MainActivity : ComponentActivity() {
 fun MyApp(content: @Composable () -> Unit) {
     MovieAppTheme {
         content()
-    }
-}
-
-
-
-@Composable
-fun MovieRow(movie: String, onItemClick: (String) -> Unit = {}) {
-    Card(modifier = Modifier
-        .padding(10.dp)
-        .fillMaxWidth()
-        .height(130.dp),
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = CardDefaults.cardElevation(6.dp),
-        onClick = {
-            onItemClick(movie)
-        }) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Surface(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .size(100.dp),
-                shape = RectangleShape,
-                tonalElevation = 4.dp,
-                shadowElevation = 4.dp
-            ) {
-                Icon(imageVector = Icons.Default.AccountBox, contentDescription = "Movie Image")
-            }
-            Text(text = movie)
-        }
     }
 }
 
